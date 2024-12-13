@@ -29,6 +29,7 @@
 			.openPopup();
 
 		const bounds = map.getBounds()
+		console.log(bounds.toBBoxString())
 		const coords = await fetchCoordinates(bounds)
 		
 		coords.forEach((coords) => {
@@ -57,10 +58,10 @@
 		const southWest = bounds.getSouthWest()
 
 		const url = new URL('http://localhost:8080/posts/coordinates');
-		url.searchParams.set('northEastLat', northEast.lat.toString());
-		url.searchParams.set('northEastLng', northEast.lng.toString());
-		url.searchParams.set('southWestLat', southWest.lat.toString());
-		url.searchParams.set('southWestLng', southWest.lng.toString());
+		url.searchParams.set('minLat', southWest.lat.toString());
+		url.searchParams.set('minLng', southWest.lng.toString());
+		url.searchParams.set('maxLat', northEast.lat.toString());
+		url.searchParams.set('maxLng', northEast.lng.toString());
 
 		try {
 			const response = await fetch(url.toString());
