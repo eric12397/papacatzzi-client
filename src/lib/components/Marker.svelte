@@ -32,7 +32,7 @@
             const data = await response.json();
             return data;
         } catch (error) {
-            console.error('Error fetching posts:', error);
+            console.error('Error fetching sighting details:', error);
             throw error;
         }
     }
