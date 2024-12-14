@@ -5,7 +5,7 @@
 	import Marker from './Marker.svelte';
 
 	let map: L.Map;
-	let coords: PostCoordinates[]
+	let sightings: SightingCoordinates[]
 	let initialView: L.LatLngExpression;
 
 	onMount(async () => {
@@ -26,7 +26,7 @@
 		}).addTo(map);
 
 		const bounds = map.getBounds()
-		coords = await fetchCoordinates(bounds)
+		sightings = await fetchSightings(bounds)
 	});
 		
 
@@ -37,17 +37,17 @@
 		}
 	});
 
-    const getCurrentPosition = () => {
+   	const getCurrentPosition = () => {
 		return new Promise<GeolocationPosition>((resolve, reject) =>
 			navigator.geolocation.getCurrentPosition(resolve, reject)
 		);
 	}
 
-	const fetchCoordinates = async (bounds: L.LatLngBounds): Promise<PostCoordinates[]> => {
+	const fetchSightings = async (bounds: L.LatLngBounds): Promise<SightingCoordinates[]> => {
 		const northEast = bounds.getNorthEast()
 		const southWest = bounds.getSouthWest()
 
-		const url = new URL('http://localhost:8080/posts/coordinates');
+		const url = new URL('http://localhost:8080/sightings');
 		url.searchParams.set('minLat', southWest.lat.toString());
 		url.searchParams.set('minLng', southWest.lng.toString());
 		url.searchParams.set('maxLat', northEast.lat.toString());
@@ -56,13 +56,13 @@
 		try {
 			const response = await fetch(url.toString());
 			if (!response.ok) {
-				throw new Error(`Failed to fetch posts: ${response.statusText}`);
+				throw new Error(`Failed to fetch sightings: ${response.statusText}`);
 			}
 
 			const data = await response.json();
 			return data;
 		} catch (error) {
-			console.error('Error fetching posts:', error);
+			console.error('Error fetching sightings:', error);
 			throw error;
 		}
 	}
@@ -77,8 +77,8 @@
 </style>
 
 <div id="map" style="">
-	{#each coords as c (c.PostID)}
-    	<Marker {map} coords={c} />
+	{#each sightings as s (s.ID)}
+    	<Marker {map} coords={s} />
   	{/each}
 </div>
   

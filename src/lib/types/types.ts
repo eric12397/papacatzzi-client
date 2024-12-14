@@ -1,12 +1,12 @@
-type PostCoordinates = {
-    PostID: number
+type SightingCoordinates = {
+    ID: number
     Latitude: number
     Longitude: number
     Timestamp: number
 }
 
-type PostDetails = {
+type SightingDetails = {
     ID: number
     Animal: string
-    Author: string
+    Reporter: string
 }
