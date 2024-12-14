@@ -29,7 +29,6 @@
 			.openPopup();
 
 		const bounds = map.getBounds()
-		console.log(bounds.toBBoxString())
 		const coords = await fetchCoordinates(bounds)
 		
 		coords.forEach((coords) => {
