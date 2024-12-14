@@ -23,7 +23,7 @@
         }
     })
 
-    const fetchSightingDetails = async (sightingID: number) => {
+    const fetchSightingDetails = async (sightingID: number): Promise<SightingDetails> => {
         try {
             const response = await fetch(`http://localhost:8080/sightings/${sightingID}`);
             if (!response.ok) {
