@@ -12,7 +12,8 @@
             .openPopup();
 
         marker.on('click', async () => {
-            const post = await fetchSightingDetails(coords.ID)
+            const sighting = await fetchSightingDetails(coords.ID)
+            console.log(sighting)
         });
 
         return () => {
@@ -22,9 +23,9 @@
         }
     })
 
-    const fetchSightingDetails = async (postID: number) => {
+    const fetchSightingDetails = async (sightingID: number) => {
         try {
-            const response = await fetch("");
+            const response = await fetch(`http://localhost:8080/sightings/${sightingID}`);
             if (!response.ok) {
                 throw new Error(`Failed to fetch sighting details: ${response.statusText}`);
             }
