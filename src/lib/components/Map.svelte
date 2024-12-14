@@ -2,20 +2,22 @@
 	import { onMount, onDestroy } from 'svelte';
 	import L from 'leaflet';
 	import 'leaflet/dist/leaflet.css';
+	import Marker from './Marker.svelte';
 
 	let map: L.Map;
-	let view: L.LatLngExpression;
+	let coords: PostCoordinates[]
+	let initialView: L.LatLngExpression;
 
 	onMount(async () => {
 		try {
 			const currPos = await getCurrentPosition()
-			view = [currPos.coords.latitude, currPos.coords.longitude]
+			initialView = [currPos.coords.latitude, currPos.coords.longitude]
 		} catch (e) {
 			console.error(e)
 		}
 
 		// Initialize the map
-		map = L.map('map').setView(view, 20);
+		map = L.map('map').setView(initialView, 20);
 
 		// Add a tile layer (OpenStreetMap - free)
 		L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -23,19 +25,8 @@
 			'© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
 		}).addTo(map);
 
-		// Add a marker
-		L.marker(view).addTo(map)
-			.bindPopup('You are here!')
-			.openPopup();
-
 		const bounds = map.getBounds()
-		const coords = await fetchCoordinates(bounds)
-		
-		coords.forEach((coords) => {
-			L.marker([coords.Latitude, coords.Longitude]).addTo(map)
-				.bindPopup('Cat spotted!')
-				.openPopup();
-		})
+		coords = await fetchCoordinates(bounds)
 	});
 		
 
@@ -52,7 +43,7 @@
 		);
 	}
 
-	const fetchCoordinates = async (bounds: L.LatLngBounds): Promise<Coordinates[]> => {
+	const fetchCoordinates = async (bounds: L.LatLngBounds): Promise<PostCoordinates[]> => {
 		const northEast = bounds.getNorthEast()
 		const southWest = bounds.getSouthWest()
 
@@ -81,9 +72,13 @@
 <style>
 #map {
     height: 100vh; /* Ensure the map fills the container */
-    width: 100%
+    width: 100% 
 }
 </style>
 
-<div id="map" style=""></div>
+<div id="map" style="">
+	{#each coords as c (c.PostID)}
+    	<Marker {map} coords={c} />
+  	{/each}
+</div>
   
