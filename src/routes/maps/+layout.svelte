@@ -1,7 +1,7 @@
 <script lang="ts">
-	import '../app.css';
+	import Map from '$lib/components/Map.svelte';
 	let { children } = $props();
-	// possible nav/logo
 </script>
 
+<Map/>
 {@render children()}

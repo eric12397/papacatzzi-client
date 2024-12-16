@@ -1,7 +1,6 @@
-<script>
-    import Map from '$lib/components/Map.svelte';
+<script lang="ts">
+	import { goto } from "$app/navigation";
+    goto("/maps")
+
+    // TODO: create home page here
 </script>
-  
-<div>
-    <Map />
-</div> 
