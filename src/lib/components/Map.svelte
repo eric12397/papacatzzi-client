@@ -78,7 +78,7 @@
 
 <div id="map" style="">
 	{#each sightings as s (s.ID)}
-    	<Marker {map} coords={s} />
+		<Marker {map} coords={s} />
   	{/each}
 </div>
   
