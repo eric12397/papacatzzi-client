@@ -7,7 +7,12 @@
     let marker: L.Marker;
 
     onMount(() => {
-        marker = L.marker([coords.Latitude, coords.Longitude])
+        const icon = L.icon({
+            iconUrl: '/images/cat-marker.png',
+            iconSize: [60, 60], // Adjust size of the icon (width, height)
+        });
+
+        marker = L.marker([coords.Latitude, coords.Longitude], { icon })
         marker.addTo(map)
         
         marker.on('click', async () => {
