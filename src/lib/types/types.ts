@@ -10,3 +10,13 @@ type SightingDetails = {
     Animal: string
     Reporter: string
 }
+
+type CreateSighting = {
+    Reporter:    string
+    PhotoURL:    string
+    Animal:      string
+    Description: string
+    Latitude:    number
+    Longitude:   number
+    Timestamp:   number
+}
