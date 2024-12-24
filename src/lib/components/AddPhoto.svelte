@@ -31,7 +31,8 @@
             const coordsFound = (output.latitude && output.longitude)
             const timeDiff = Date.now() - file.lastModified
             const isImageFromCamera = timeDiff <= 60000 // is photo taken within last 60 secs
-            
+            let err = ""
+
             if (coordsFound) {
                 image.latitude = output.latitude
                 image.longitude = output.longitude
@@ -45,10 +46,11 @@
                 image.timestamp = currPos.timestamp
             }
             else {
-                const err = `No coordinates were found.`
+                err = "No coordinates found."
                 alert(err)
-                throw new Error(err);
             }
+
+            if (err) throw new Error(err);
         
             imageStore.set(image)
             goto("/upload")
@@ -63,7 +65,6 @@
     id="fileInput"
     type="file"
     accept="image/*"
-    capture="environment"
     style="display: none;"
     onchange={handleFileInput}
 />
