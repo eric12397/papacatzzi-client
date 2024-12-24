@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { onMount, onDestroy } from 'svelte';
+	import { getCurrentPosition } from '$lib/utils/currPos';
 	import L from 'leaflet';
 	import 'leaflet/dist/leaflet.css';
 	import Marker from './Marker.svelte';
@@ -36,12 +37,6 @@
 			map.remove();
 		}
 	});
-
-   	const getCurrentPosition = () => {
-		return new Promise<GeolocationPosition>((resolve, reject) =>
-			navigator.geolocation.getCurrentPosition(resolve, reject)
-		);
-	}
 
 	const fetchSightings = async (bounds: L.LatLngBounds): Promise<SightingCoordinates[]> => {
 		const northEast = bounds.getNorthEast()

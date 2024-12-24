@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { goto } from "$app/navigation";
 	import { imageStore, type ImageData } from "$lib/stores/image";
+    import { getCurrentPosition } from "$lib/utils/currPos";
 	import imageCompression from "browser-image-compression";
 	import exifr from "exifr";
 
@@ -10,12 +11,6 @@
         latitude: 0,
         timestamp: Date.now()
     })
-
-    const getCurrentPosition = () => {
-		return new Promise<GeolocationPosition>((resolve, reject) =>
-			navigator.geolocation.getCurrentPosition(resolve, reject)
-		);
-	}
 
     const handleFileInput = async (event: Event) => {   
         const target = event.target as HTMLInputElement;
@@ -50,7 +45,7 @@
                 image.timestamp = currPos.timestamp
             }
             else {
-                const err = `No coordinate data was found.`
+                const err = `No coordinates were found.`
                 alert(err)
                 throw new Error(err);
             }
