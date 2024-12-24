@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { goto } from "$app/navigation";
+	import AddPhoto from "$lib/components/AddPhoto.svelte";
 	import { imageStore } from "$lib/stores/image";
-	import { get } from "svelte/store";
 
     let formData: CreateSighting = $state({
         Reporter: "",
@@ -13,13 +13,14 @@
         Timestamp: Date.now()
     })
     
-    let image = get(imageStore)
-    if (image) {
-        formData.PhotoURL = image.src
-        formData.Latitude = image.latitude
-        formData.Longitude = image.longitude
-        formData.Timestamp = image.timestamp
-    }
+    imageStore.subscribe((image) => {
+        if (image) {
+            formData.PhotoURL = image.src
+            formData.Latitude = image.latitude
+            formData.Longitude = image.longitude
+            formData.Timestamp = image.timestamp
+        }
+    })
 
     const handleSubmit = async (event: any) => {
         event.preventDefault()
@@ -43,24 +44,43 @@
 </script>
 
 <form>
-    {#if image?.src}
-        <img src={image.src} alt="Preview" style="max-width: 100%; height: auto;" />
-    {/if}
+    <div class="flex flex-col space-y-4 p-3">
+        <div class="mt-3">
+            <h1 class="font-bold text-center text-xl">Report a sighting:</h1>
+        </div>
+        
+        <textarea
+            class=" rounded-lg border-gray-300"
+            placeholder="Enter details about the photo"
+            bind:value={formData.Description}>
+        </textarea>
+       
+        {#if formData.PhotoURL}
+            <div class="w-40 h-40 rounded-lg overflow-hidden bg-gray-100">
+                <img 
+                    class="w-full h-full object-cover"
+                    src={formData.PhotoURL} 
+                    alt="Preview" 
+                    style=""  
+                />
+            </div>
+        {:else}
+            <label for="fileInput" class="button">📷</label>
+            <AddPhoto />
+        {/if}
 
-    <label>
-        Animal:
-        <select name="animal" id="animalType" bind:value={formData.Animal}>
-            <option>Cat</option>
-            <option>Dog</option>
-        </select>
-    </label>
+        <label>
+            Animal:
+            <select 
+                class="w-24 shadow-sm bg-gray-50 border border-gray-300 rounded-lg outline-none p-3"
+                name="animal" id="animalType" bind:value={formData.Animal}>
+                <option>Cat</option>
+                <option>Dog</option>
+            </select>
+        </label>
 
-    <label>
-        Description:
-        <textarea bind:value={formData.Description} placeholder="Enter details about the photo"></textarea>
-    </label>
+        <input hidden bind:value={formData.Reporter}>
 
-    <input hidden bind:value={formData.Reporter}>
-
-    <button class="p-6" onclick={handleSubmit}>Upload</button>
+        <button class="py-4 px-16 rounded-lg bg-indigo-700 text-white" onclick={handleSubmit}>Upload</button>
+    </div>
 </form>
