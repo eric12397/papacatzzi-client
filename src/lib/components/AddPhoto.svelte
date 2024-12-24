@@ -11,6 +11,12 @@
         timestamp: Date.now()
     })
 
+    const getCurrentPosition = () => {
+		return new Promise<GeolocationPosition>((resolve, reject) =>
+			navigator.geolocation.getCurrentPosition(resolve, reject)
+		);
+	}
+
     const handleFileInput = async (event: Event) => {   
         const target = event.target as HTMLInputElement;
         if (!target.files) return
@@ -24,33 +30,45 @@
                 useWebWorker: true,
             }
             const compressed = await imageCompression(file, options)
+            image.src = URL.createObjectURL(compressed);
+
             const output = await exifr.parse(file)
+            const coordsFound = (output.latitude && output.longitude)
+            const timeDiff = Date.now() - file.lastModified
+            const isImageFromCamera = timeDiff <= 60000 // is photo taken within last 60 secs
             
-            if (output.latitude && output.longitude) {
-                image.src = URL.createObjectURL(compressed);
+            if (coordsFound) {
                 image.latitude = output.latitude
                 image.longitude = output.longitude
                 image.timestamp = output.DateTimeOriginal
-                imageStore.set(image)
-                goto("/upload")
-            } else {
-                alert("Coordinates not found.")
             }
+            else if (!coordsFound && isImageFromCamera) {
+                // fallback to grabbing user's current position
+                const currPos = await getCurrentPosition()
+                image.latitude = currPos.coords.latitude
+                image.longitude = currPos.coords.longitude
+                image.timestamp = currPos.timestamp
+            }
+            else {
+                const err = `No coordinate data was found.`
+                alert(err)
+                throw new Error(err);
+            }
+        
+            imageStore.set(image)
+            goto("/upload")
+
         } catch (e) {
             console.error(e)
         }
-        
     }
 </script>
 
-<div>
-    <label for="fileInput" class="button">📷</label>
-    <input
-        id="fileInput"
-        type="file"
-        accept="image/*"
-        capture="environment"
-        style="display: none;"
-        onchange={handleFileInput}
-    />
-</div>
+<input
+    id="fileInput"
+    type="file"
+    accept="image/*"
+    capture="environment"
+    style="display: none;"
+    onchange={handleFileInput}
+/>
