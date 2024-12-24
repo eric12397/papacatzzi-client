@@ -1,9 +1,10 @@
 <script lang="ts">
-	import { goto } from "$app/navigation";
 	import { imageStore, type ImageData } from "$lib/stores/image";
     import { getCurrentPosition } from "$lib/utils/currPos";
 	import imageCompression from "browser-image-compression";
 	import exifr from "exifr";
+
+    let { onSuccess }: { onSuccess?: () => void } = $props()
 
     let image: ImageData = $state({
         src: "",
@@ -50,10 +51,11 @@
                 alert(err)
             }
 
-            if (err) throw new Error(err);
-        
+            if (err) throw new Error(err);        
             imageStore.set(image)
-            goto("/upload")
+
+             // callback function if passed in as prop
+            if (onSuccess) onSuccess()
 
         } catch (e) {
             console.error(e)

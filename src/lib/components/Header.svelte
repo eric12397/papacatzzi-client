@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { goto } from "$app/navigation";
 	import AddPhoto from "./AddPhoto.svelte";
 </script>
 
@@ -15,7 +16,8 @@
 		<!-- Navigation Links -->
 
 		<div class="flex space-x-9">
-			<AddPhoto />
+			<label for="fileInput" class="button">📷</label>
+			<AddPhoto onSuccess={() => goto("/upload")}/>
 			<div>
 				<a href="#" class="hover:text-blue-300">Log In</a>
 			</div>
