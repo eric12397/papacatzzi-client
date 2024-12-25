@@ -29,7 +29,7 @@
             image.src = URL.createObjectURL(compressed);
 
             const output = await exifr.parse(file)
-            const coordsFound = (output.latitude && output.longitude)
+            const coordsFound = (output && output.latitude && output.longitude)
             const timeDiff = Date.now() - file.lastModified
             const isImageFromCamera = timeDiff <= 60000 // is photo taken within last 60 secs
             let err = ""
