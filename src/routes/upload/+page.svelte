@@ -3,7 +3,7 @@
 	import AddPhoto from "$lib/components/AddPhoto.svelte";
 	import { imageStore } from "$lib/stores/image";
 
-    let formData: CreateSighting = $state({
+    const initialFormData = {  
         Reporter: "",
         PhotoURL:    "",
         Animal:      "",
@@ -11,7 +11,9 @@
         Latitude:    0,
         Longitude:   0,
         Timestamp: Date.now()
-    })
+    }
+
+    let formData: CreateSighting = $state(initialFormData)
     
     imageStore.subscribe((image) => {
         if (image) {
@@ -41,6 +43,10 @@
             throw error;
         }
     }
+
+    const clearImage = () => {
+        formData = initialFormData
+    };
 </script>
 
 <form>
@@ -56,13 +62,24 @@
         </textarea>
        
         {#if formData.PhotoURL}
-            <div class="w-40 h-40 rounded-lg overflow-hidden bg-gray-100">
-                <img 
-                    class="w-full h-full object-cover"
-                    src={formData.PhotoURL} 
-                    alt="Preview" 
-                    style=""  
-                />
+            <div class="w-40 relative inline-block">
+                <div class="rounded-lg overflow-hidden bg-gray-100">
+                    <img 
+                        class="w-full h-full object-cover"
+                        src={formData.PhotoURL} 
+                        alt="Preview" 
+                        style=""  
+                    />
+                </div>
+                <button
+                    onclick={clearImage}
+                    aria-label="Delete image"
+                    class="absolute top-2 right-2 w-8 h-8 
+                    bg-black bg-opacity-60 rounded-full 
+                    items-center justify-center hover:bg-red-500 transition"
+                >
+                    🗑️
+                </button>
             </div>
         {:else}
             <label for="fileInput" class="button">📷</label>
