@@ -83,7 +83,7 @@
                     aria-label="Delete image"
                     class="absolute top-2 right-2 w-8 h-8 
                     bg-black bg-opacity-60 rounded-full 
-                    items-center justify-center hover:bg-red-500 transition"
+                    items-center justify-center hover:bg-white transition"
                 >
                     🗑️
                 </button>
