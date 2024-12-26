@@ -14,7 +14,10 @@
     }
 
     let formData: CreateSighting = $state(initialFormData)
-    
+    let btnDisabled = $derived(
+        formData.PhotoURL && formData.Description && formData.Animal ? false:true
+    )
+
     imageStore.subscribe((image) => {
         if (image) {
             formData.PhotoURL = image.src
@@ -24,8 +27,7 @@
         }
     })
 
-    const handleSubmit = async (event: any) => {
-        event.preventDefault()        
+    const handleSubmit = async () => {
         try {
             const response = await fetch(`http://localhost:8080/sightings`, {
                 method: "POST",
@@ -53,7 +55,7 @@
     }
 </script>
 
-<form class="flex justify-center">
+<form class="flex justify-center" onsubmit={handleSubmit}>
     <div class="flex flex-col w-screen md:w-1/3 lg:w-1/2 space-y-4 p-3">
         <div class="flex items-center mt-3">
             <i class="fa-solid fa-arrow-left fa-xl" onclick={goToMaps}></i>
@@ -103,6 +105,13 @@
 
         <input hidden bind:value={formData.Reporter}>
 
-        <button class="py-4 px-16 rounded-lg bg-indigo-700 text-white" onclick={handleSubmit}>Upload</button>
+        <button 
+            disabled={btnDisabled}
+            class:bg-gray-200={btnDisabled}
+            class:text-gray-400={btnDisabled}
+            class="py-4 px-16 rounded-lg bg-indigo-700 text-white font-bold transition"
+        >
+            Upload
+        </button>
     </div>
 </form>
