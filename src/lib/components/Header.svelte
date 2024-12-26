@@ -16,7 +16,7 @@
 		<!-- Navigation Links -->
 
 		<div class="flex space-x-9">
-			<label for="fileInput" class="button">📷</label>
+			<label for="fileInput" class="cursor-pointer">📷</label>
 			<AddPhoto onSuccess={() => goto("/upload")}/>
 			<div>
 				<a href="#" class="hover:text-blue-300">Log In</a>

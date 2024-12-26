@@ -58,7 +58,7 @@
 <form class="flex justify-center" onsubmit={handleSubmit}>
     <div class="flex flex-col w-screen md:w-1/3 lg:w-1/2 space-y-4 p-3">
         <div class="flex items-center mt-3">
-            <i class="fa-solid fa-arrow-left fa-xl" onclick={goToMaps}></i>
+            <i class="cursor-pointer fa-solid fa-arrow-left fa-xl" onclick={goToMaps}></i>
             <h1 class="font-bold text-center text-xl flex-1">Report a sighting:</h1>
         </div>
         
