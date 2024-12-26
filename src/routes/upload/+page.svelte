@@ -107,10 +107,9 @@
 
         <button 
             disabled={btnDisabled}
-            class:bg-gray-200={btnDisabled}
-            class:text-gray-400={btnDisabled}
-            class="py-4 px-16 rounded-lg bg-indigo-700 text-white font-bold transition"
-        >
+            class="py-4 px-16 rounded-lg text-white font-bold transition
+                {btnDisabled ? 'bg-gray-200 text-gray-400' : 'bg-indigo-700'}"
+            >
             Upload
         </button>
     </div>
