@@ -25,7 +25,7 @@
     })
 
     const handleSubmit = async (event: any) => {
-        event.preventDefault()
+        event.preventDefault()        
         try {
             const response = await fetch(`http://localhost:8080/sightings`, {
                 method: "POST",
@@ -47,22 +47,27 @@
     const clearImage = () => {
         formData = initialFormData
     };
+ 
+    const goToMaps = () => {
+        goto("/maps")
+    }
 </script>
 
-<form>
-    <div class="flex flex-col space-y-4 p-3">
-        <div class="mt-3">
-            <h1 class="font-bold text-center text-xl">Report a sighting:</h1>
+<form class="flex justify-center">
+    <div class="flex flex-col w-screen md:w-1/3 lg:w-1/2 space-y-4 p-3">
+        <div class="flex items-center mt-3">
+            <i class="fa-solid fa-arrow-left fa-xl" onclick={goToMaps}></i>
+            <h1 class="font-bold text-center text-xl flex-1">Report a sighting:</h1>
         </div>
         
         <textarea
-            class=" rounded-lg border-gray-300"
+            class="rounded-lg border-gray-300"
             placeholder="Enter details about the photo"
             bind:value={formData.Description}>
         </textarea>
        
         {#if formData.PhotoURL}
-            <div class="w-40 relative inline-block">
+            <div class="relative inline-block">
                 <div class="rounded-lg overflow-hidden bg-gray-100">
                     <img 
                         class="w-full h-full object-cover"
@@ -89,7 +94,7 @@
         <label>
             Animal:
             <select 
-                class="w-24 shadow-sm bg-gray-50 border border-gray-300 rounded-lg outline-none p-3"
+                class="w-24 ml-2 shadow-sm bg-gray-50 border border-gray-300 rounded-lg outline-none p-3"
                 name="animal" id="animalType" bind:value={formData.Animal}>
                 <option>Cat</option>
                 <option>Dog</option>
