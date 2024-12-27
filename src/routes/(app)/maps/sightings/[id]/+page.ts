@@ -9,7 +9,7 @@ export const load: PageLoad = async ({ params }) => {
 
 const fetchSightingDetails = async (sightingID: string): Promise<SightingDetails> => {
     try {
-        const response = await fetch(`http://localhost:8080/sightings/${sightingID}`);
+        const response = await fetch(`${import.meta.env.VITE_BASE_URL}/sightings/${sightingID}`);
         if (!response.ok) {
             throw new Error(`Failed to fetch sighting details: ${response.statusText}`);
         }
