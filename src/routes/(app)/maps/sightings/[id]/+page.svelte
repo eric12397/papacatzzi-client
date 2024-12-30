@@ -4,11 +4,10 @@
 
     let isOpen = $state(false);
     let isExpanded = $state(false);
+    const isMobile = !window.matchMedia('(hover: hover)').matches
 
     let touchStartY = $state(0)
     let touchEndY = $state(0)
-
-    let element = $state<HTMLElement>()
 
     afterNavigate(() => {
         isOpen = true
@@ -51,21 +50,37 @@
             return
         }
     }
+
+    const mobileEventListeners = (el: HTMLElement) => {
+        if (isMobile) {
+            el.addEventListener("click", toggleExpand)
+            el.addEventListener("touchstart", onTouchStart)
+            el.addEventListener("touchmove", (e) => e.preventDefault())
+            el.addEventListener("touchend", onTouchEnd)
+        }
+    }
+
+    let mobileContainer = $derived(
+        `bottom-0 left-0 w-full rounded-t-lg transition-all duration-300
+        ${isOpen && isExpanded ? "h-full" : 
+          isOpen && !isExpanded ?  "h-96" : "h-0"}`
+    )
+
+    let desktopContainer = $derived(
+        `top-0 left-0 h-full ${isOpen ? "w-96" : "hidden"}`
+    )
 </script>
 
 
 <!-- svelte-ignore a11y_click_events_have_key_events -->
 <!-- svelte-ignore a11y_no_static_element_interactions -->
 <div
-    class={`z-index fixed bottom-0 left-0 w-full bg-white rounded-t-lg shadow-lg transition-all duration-300
-        ${isOpen && isExpanded ? "h-full" : 
-          isOpen && !isExpanded ?  "h-96" : "h-0"}`
-        }
-    onclick={toggleExpand}
-    ontouchstart={onTouchStart}
-    ontouchend={onTouchEnd}
+    class={`z-index fixed bg-white shadow-lg
+            ${isMobile ? mobileContainer : desktopContainer}`}
+
+    use:mobileEventListeners
 >
-    <div class="rounded-t-lg overflow-hidden">
+    <div class={`rounded-t-lg ${isMobile ? "overflow-hidden" : ""}`}>
         <img class="w-full max-h-64 object-cover"
             
             src="/images/cat.jpg"
@@ -82,12 +97,12 @@
         </button>
     </div>
     
-    <div bind:this={element} class={`py-3 px-5 ${!isExpanded ? "h-24" : ""}`}>
+    <div class={`py-3 px-5 ${isMobile && !isExpanded ? "h-24" : ""}`}>
         <!-- <small>{data.sighting.reporter}</small> -->
         <small class="text-gray-600">AnonymousUser19357275 . 20h</small>
 
         <!-- <h2>{data.sighting.animal}</h2> -->
-        <p class={`${!isExpanded ? "line-clamp-2" : ""}`}>{data.sighting.description}</p>
+        <p class={`${isMobile && !isExpanded ? "line-clamp-2" : ""}`}>{data.sighting.description}</p>
     </div>
 
     <div class="flex justify-around text-gray-600">
