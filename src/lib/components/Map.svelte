@@ -42,7 +42,7 @@
 		const northEast = bounds.getNorthEast()
 		const southWest = bounds.getSouthWest()
 
-		const url = new URL('http://localhost:8080/sightings');
+		const url = new URL(`${import.meta.env.VITE_BASE_URL}/sightings`);
 		url.searchParams.set('minLat', southWest.lat.toString());
 		url.searchParams.set('minLng', southWest.lng.toString());
 		url.searchParams.set('maxLat', northEast.lat.toString());
@@ -72,8 +72,10 @@
 </style>
 
 <div id="map" style="">
-	{#each sightings as s (s.ID)}
-		<Marker {map} coords={s} />
-  	{/each}
+	{#if map}
+		{#each sightings as s (s.ID)}
+			<Marker {map} coords={s} />
+		{/each}
+	{/if}
 </div>
   

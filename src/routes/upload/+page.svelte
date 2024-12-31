@@ -29,7 +29,7 @@
 
     const handleSubmit = async () => {
         try {
-            const response = await fetch(`http://localhost:8080/sightings`, {
+            const response = await fetch(`${import.meta.env.VITE_BASE_URL}/sightings`, {
                 method: "POST",
                 body:  JSON.stringify(formData),
             });

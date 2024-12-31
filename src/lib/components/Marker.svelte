@@ -16,7 +16,7 @@
         marker.addTo(map)
         
         marker.on('click', async () => {
-            goto(`maps/sightings/${coords.ID}`)
+            goto(`/maps/sightings/${coords.ID}`)
         });
 
         return () => {
