@@ -6,9 +6,12 @@ type SightingCoordinates = {
 }
 
 type SightingDetails = {
-    ID: number
-    Animal: string
-    Reporter: string
+    id: number
+    animal: string
+    description: string
+    reporter: string
+    photoURL: string
+    timestamp: number
 }
 
 type CreateSighting = {
