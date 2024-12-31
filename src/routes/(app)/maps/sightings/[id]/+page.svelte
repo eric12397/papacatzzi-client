@@ -4,10 +4,12 @@
 
     let isOpen = $state(false);
     let isExpanded = $state(false);
-    const isMobile = !window.matchMedia('(hover: hover)').matches
 
     let touchStartY = $state(0)
     let touchEndY = $state(0)
+
+    // TODO: may need to tweak
+    const isMobile = !window.matchMedia('(hover: hover)').matches
 
     afterNavigate(() => {
         isOpen = true
@@ -51,6 +53,29 @@
         }
     }
 
+    const timeAgo = (input: number): string => {
+        const inputDate = new Date(input);
+        const currentDate = new Date();
+        const timeDifferenceInSeconds = Math.floor((currentDate.getTime() - inputDate.getTime()) / 1000);
+
+        const intervals = new Map<string, number>()
+        intervals.set("year", 31536000)
+        intervals.set("month", 2592000)
+        intervals.set("week", 604800)
+        intervals.set("day", 86400)
+        intervals.set("hour", 3600)
+        intervals.set("minute", 60)
+
+        for (const [key, value] of intervals) {
+            const numberOfUnits = Math.floor(timeDifferenceInSeconds / value);
+            if (numberOfUnits >= 1) {
+                return `${numberOfUnits} ${key}${numberOfUnits > 1 ? 's' : ''} ago`;
+            }
+        }
+
+        return 'just now';
+    }
+
     const mobileEventListeners = (el: HTMLElement) => {
         if (isMobile) {
             el.addEventListener("click", toggleExpand)
@@ -82,8 +107,7 @@
 >
     <div class={`rounded-t-lg ${isMobile ? "overflow-hidden" : ""}`}>
         <img class="w-full max-h-64 object-cover"
-            
-            src="/images/cat.jpg"
+            src={data.sighting.photoURL}
             alt="Preview" 
             style=""  
         />
@@ -99,7 +123,7 @@
     
     <div class={`py-3 px-5 ${isMobile && !isExpanded ? "h-24" : ""}`}>
         <!-- <small>{data.sighting.reporter}</small> -->
-        <small class="text-gray-600">AnonymousUser19357275 . 20h</small>
+        <small class="text-gray-600">AnonymousUser19357275 · {timeAgo(data.sighting.timestamp)}</small>
 
         <!-- <h2>{data.sighting.animal}</h2> -->
         <p class={`${isMobile && !isExpanded ? "line-clamp-2" : ""}`}>{data.sighting.description}</p>
