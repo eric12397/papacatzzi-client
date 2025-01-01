@@ -1,37 +1,28 @@
 <script lang="ts">
 	import { goto } from "$app/navigation";
 	import AddPhoto from "$lib/components/AddPhoto.svelte";
-	import { imageStore } from "$lib/stores/image";
+	import { image } from "$lib/states/image.svelte";
 
-    const initialFormData = {  
-        Reporter: "",
-        PhotoURL:    "",
-        Animal:      "",
-        Description: "",
-        Latitude:    0,
-        Longitude:   0,
-        Timestamp: Date.now()
-    }
-
-    let formData: CreateSighting = $state(initialFormData)
-    let btnDisabled = $derived(
-        formData.PhotoURL && formData.Description && formData.Animal ? false:true
-    )
-
-    imageStore.subscribe((image) => {
-        if (image) {
-            formData.PhotoURL = image.src
-            formData.Latitude = image.latitude
-            formData.Longitude = image.longitude
-            formData.Timestamp = image.timestamp
-        }
+    let formData = $state({
+        reporter: "",
+        animal:      "",
+        description: "",
     })
 
+    let btnDisabled = $derived(
+        image.photoURL && formData.description && formData.animal ? false : true
+    )
+
     const handleSubmit = async () => {
+        const body: CreateSighting = {
+            ...image.toJSON(),
+            ...formData
+        }
+
         try {
             const response = await fetch(`${import.meta.env.VITE_BASE_URL}/sightings`, {
                 method: "POST",
-                body:  JSON.stringify(formData),
+                body:  JSON.stringify(body),
             });
             
             if (!response.ok) {
@@ -46,10 +37,6 @@
         }
     }
 
-    const clearImage = () => {
-        formData = initialFormData
-    };
- 
     const goToMaps = () => {
         goto("/maps")
     }
@@ -65,21 +52,21 @@
         <textarea
             class="rounded-lg border-gray-300"
             placeholder="Enter details about the photo"
-            bind:value={formData.Description}>
+            bind:value={formData.description}>
         </textarea>
        
-        {#if formData.PhotoURL}
+        {#if image.photoURL}
             <div class="relative inline-block">
                 <div class="rounded-lg overflow-hidden bg-gray-100">
                     <img 
                         class="w-full h-full object-cover"
-                        src={formData.PhotoURL} 
+                        src={image.photoURL} 
                         alt="Preview" 
                         style=""  
                     />
                 </div>
                 <button
-                    onclick={clearImage}
+                    onclick={image.clearImage}
                     aria-label="Delete image"
                     class="absolute top-2 right-2 w-8 h-8 
                     bg-black bg-opacity-60 rounded-full 
@@ -97,13 +84,13 @@
             Animal:
             <select 
                 class="w-24 ml-2 shadow-sm bg-gray-50 border border-gray-300 rounded-lg outline-none p-3"
-                name="animal" id="animalType" bind:value={formData.Animal}>
+                name="animal" id="animalType" bind:value={formData.animal}>
                 <option>Cat</option>
                 <option>Dog</option>
             </select>
         </label>
 
-        <input hidden bind:value={formData.Reporter}>
+        <input hidden bind:value={formData.reporter}>
 
         <button 
             disabled={btnDisabled}

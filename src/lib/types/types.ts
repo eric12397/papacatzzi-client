@@ -15,11 +15,11 @@ type SightingDetails = {
 }
 
 type CreateSighting = {
-    Reporter:    string
-    PhotoURL:    string
-    Animal:      string
-    Description: string
-    Latitude:    number
-    Longitude:   number
-    Timestamp:   number
+    reporter:    string
+    photoURL:    string
+    animal:      string
+    description: string
+    latitude:    number
+    longitude:   number
+    timestamp:   number
 }

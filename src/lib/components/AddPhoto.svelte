@@ -1,17 +1,10 @@
 <script lang="ts">
-	import { imageStore, type ImageData } from "$lib/stores/image";
+	import { image } from "$lib/states/image.svelte";
     import { getCurrentPosition } from "$lib/utils/currPos";
 	import imageCompression from "browser-image-compression";
 	import exifr from "exifr";
 
     let { onSuccess }: { onSuccess?: () => void } = $props()
-
-    let image: ImageData = $state({
-        src: "",
-        longitude: 0,
-        latitude: 0,
-        timestamp: Date.now()
-    })
 
     const handleFileInput = async (event: Event) => {   
         const target = event.target as HTMLInputElement;
@@ -26,7 +19,6 @@
                 useWebWorker: true,
             }
             const compressed = await imageCompression(file, options)
-            image.src = URL.createObjectURL(compressed);
 
             const output = await exifr.parse(file)
             const coordsFound = (output && output.latitude && output.longitude)
@@ -51,8 +43,8 @@
                 alert(err)
             }
 
-            if (err) throw new Error(err);        
-            imageStore.set(image)
+            if (err) throw new Error(err);
+            image.photoURL = URL.createObjectURL(compressed);
 
              // callback function if passed in as prop
             if (onSuccess) onSuccess()
