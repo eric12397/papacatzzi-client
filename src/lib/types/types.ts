@@ -1,8 +1,8 @@
 type SightingCoordinates = {
-    ID: number
-    Latitude: number
-    Longitude: number
-    Timestamp: number
+    id: number
+    latitude: number
+    longitude: number
+    timestamp: number
 }
 
 type SightingDetails = {
