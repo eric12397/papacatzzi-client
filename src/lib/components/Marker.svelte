@@ -12,11 +12,11 @@
             iconSize: [60, 60], // Adjust size of the icon (width, height)
         });
 
-        marker = L.marker([coords.Latitude, coords.Longitude], { icon })
+        marker = L.marker([coords.latitude, coords.longitude], { icon })
         marker.addTo(map)
         
         marker.on('click', async () => {
-            goto(`/maps/sightings/${coords.ID}`)
+            goto(`/maps/sightings/${coords.id}`)
         });
 
         return () => {

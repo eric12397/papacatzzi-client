@@ -18,7 +18,7 @@
 		}
 
 		// Initialize the map
-		map = L.map('map').setView(initialView, 20);
+		map = L.map('map').setView(initialView, 16);
 
 		// Add a tile layer (OpenStreetMap - free)
 		L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -73,7 +73,7 @@
 
 <div id="map" style="">
 	{#if map}
-		{#each sightings as s (s.ID)}
+		{#each sightings as s (s.id)}
 			<Marker {map} coords={s} />
 		{/each}
 	{/if}
