@@ -23,3 +23,9 @@ type CreateSighting = {
     longitude:   number
     timestamp:   number
 }
+
+type CreateUser = {
+    username: string
+    email: string
+    password: string
+}

@@ -1,13 +1,24 @@
 <script lang="ts">
 	import { goto } from "$app/navigation";
 	import AddPhoto from "./AddPhoto.svelte";
+	import SignUp from "./SignUp.svelte";
+
+	let showModal = $state(false)
+
+	const openModal = () => {
+		showModal = true
+	};
+
+	const closeModal = () => {
+		showModal = false
+	};
 </script>
 
 <style>
 
 </style>
 
-<header class="bg-white">
+<header class="absolute top-0 left-0 w-full bg-white z-[1000] shadow-md">
 	<div class="container mx-auto flex justify-between items-center p-6">
 		<!-- Logo -->
 		<a href="/" class="text-2xl font-bold">
@@ -22,10 +33,13 @@
 				<a href="#" class="hover:text-blue-300">Log In</a>
 			</div>
 			<div>
-				<a href="#" class="hover:text-blue-300">Sign Up</a>
+				<a onclick={openModal} class="hover:text-blue-300">Sign Up</a>
 			</div>
 		</div>
 
 	</div>
 </header>
+{#if showModal}
+	<SignUp close={closeModal}/>
+{/if}
 
