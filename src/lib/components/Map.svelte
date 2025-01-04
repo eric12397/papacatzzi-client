@@ -18,7 +18,7 @@
 		}
 
 		// Initialize the map
-		map = L.map('map').setView(initialView, 16);
+		map = L.map('map', { zoomControl: false }).setView(initialView, 16);
 
 		// Add a tile layer (OpenStreetMap - free)
 		L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
