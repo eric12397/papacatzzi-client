@@ -11,6 +11,10 @@
     const nextStep = () => {
         currentStep++
     }
+
+    const previousStep = () => {
+        currentStep--
+    }
 </script>
 
 <div 
@@ -20,20 +24,33 @@
 
 <!-- Modal content -->
 <div
-    class="flex flex-col w-full h-full fixed bg-white p-6 z-[1001]
+    class="flex flex-col w-full h-full fixed bg-white z-[1001]
     md:w-96 md:h-[600px] md:rounded-lg md:top-1/2 md:left-1/2 md:-translate-x-1/2 md:-translate-y-1/2"
 >
     
-    <h2 class="text-xl font-bold mb-4">Sign Up</h2>
-    <button
-        onclick={close}
-        aria-label="Close post"
-        class="absolute top-3 right-3 w-8 h-8"
-    >
-        X
-    </button>
+    <div class="flex px-4 pt-4 {currentStep == 1 ? "justify-end" : ""}">
+        {#if currentStep == 1}
+        <button
+            onclick={close}
+            aria-label="Close modal"
+            class="w-4 h-8"
+        >
+        <i class="fa-solid fa-x"></i>
+        </button>
+        {/if}
 
-    <div class="flex flex-col h-full">
+        {#if currentStep == 2 || currentStep == 3}
+        <button
+            onclick={previousStep}
+            aria-label="Previous step"
+            class="w-4 h-8"
+        >
+        <i class="cursor-pointer fa-solid fa-arrow-left"></i>
+        </button>
+        {/if}
+    </div>
+
+    <div class="flex flex-col h-full px-4 pb-4">
         {#if currentStep == 1}
         <BeginSignUp bind:email={email} {nextStep} />
 
