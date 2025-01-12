@@ -21,27 +21,26 @@
     }
 </script>
 
-<form>
-    <div>
-        <label class="text-sm font-medium text-gray-700">Email</label>
-        <input
-            type="email"
-            placeholder="Enter your email"
-            class="mt-1 w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
-            bind:value={email}
-        />
-    </div>
+<h2 class="text-xl font-bold mb-4">Sign Up</h2>
 
-    <div>
-        <small>Already have an account? <a>Log In</a></small>
-    </div>
-</form>
+<input
+    type="email"
+    placeholder="Email"
+    class="w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
+    bind:value={email}
+/>
+
+<div>
+    <small>Already have an account? <a>Log In</a></small>
+</div>
 
 <div class="mt-auto">
     <button
         type="submit"
-        class="w-full bg-blue-600 text-white py-2 px-4 rounded-lg hover:bg-blue-700"
         onclick={handleSubmit}
+        disabled={email === ""}
+        class="w-full text-white py-2 px-4 rounded-full 
+        {email === "" ? 'bg-gray-200 text-gray-400' : 'bg-indigo-700'}"
     >
         Continue
     </button>

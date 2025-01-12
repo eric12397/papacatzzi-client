@@ -50,7 +50,7 @@
         {/if}
     </div>
 
-    <div class="flex flex-col h-full px-4 pb-4">
+    <div class="flex flex-col h-full px-4 pb-6">
         {#if currentStep == 1}
         <BeginSignUp bind:email={email} {nextStep} />
 
