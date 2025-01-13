@@ -4,7 +4,7 @@
 	import VerifySignUp from "./VerifySignUp.svelte";
 
     let email = $state("")
-    let currentStep = $state(1)
+    let currentStep = $state(3)
 
     let { close }: { close: () => void } = $props()
 
@@ -25,7 +25,7 @@
 <!-- Modal content -->
 <div
     class="flex flex-col w-full h-full fixed bg-white z-[1001]
-    md:w-96 md:h-[600px] md:rounded-lg md:top-1/2 md:left-1/2 md:-translate-x-1/2 md:-translate-y-1/2"
+    md:w-[500px] md:h-[600px] md:rounded-lg md:top-1/2 md:left-1/2 md:-translate-x-1/2 md:-translate-y-1/2"
 >
     
     <div class="flex px-4 pt-4 {currentStep == 1 ? "justify-end" : ""}">
@@ -50,7 +50,7 @@
         {/if}
     </div>
 
-    <div class="flex flex-col h-full px-6 pt-2 pb-6">
+    <div class="flex flex-col h-full pt-2 px-6 pb-6 md:px-24 md:pb-10">
         {#if currentStep == 1}
         <BeginSignUp bind:email={email} {nextStep} />
 
