@@ -6,7 +6,7 @@
         nextStep 
     }: { 
         email: string,
-        requestVerificationCode: () => void,
+        requestVerificationCode: () => Promise<Response>,
         nextStep: () => void 
     } = $props()
 
