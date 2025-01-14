@@ -1,14 +1,17 @@
 <script lang="ts">
-    let { email = $bindable(), nextStep }: { email: string, nextStep: () => void } = $props()
+    let { 
+        email = $bindable(),
+        requestVerificationCode,
+        nextStep 
+    }: { 
+        email: string,
+        requestVerificationCode: () => Promise<Response>,
+        nextStep: () => void 
+    } = $props()
 
     const handleSubmit = async () => {
         try {
-            const body: BeginSignUp = {email}
-            const response = await fetch(`${import.meta.env.VITE_BASE_URL}/signup/begin`, {
-                method: "POST",
-                body:  JSON.stringify(body),
-            });
-            
+            const response = await requestVerificationCode()
             if (!response.ok) {
                 throw new Error(`Failed to signup new user: ${response.statusText}`);
             }

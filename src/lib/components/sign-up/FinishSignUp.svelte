@@ -8,7 +8,7 @@
 
     const handleSubmit = async () => {
         try {
-            const body: FinishSignUp = {email, username, password}
+            const body: FinishSignUpRequest = {email, username, password}
             const response = await fetch(`${import.meta.env.VITE_BASE_URL}/signup/finish`, {
                 method: "POST",
                 body:  JSON.stringify(body),

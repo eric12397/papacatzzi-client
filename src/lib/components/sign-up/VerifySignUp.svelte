@@ -1,10 +1,18 @@
 <script lang="ts">
     let code = $state("")
-    let { email, nextStep }: { email: string, nextStep: () => void } = $props()
+    let { 
+        email = $bindable(),
+        requestVerificationCode,
+        nextStep 
+    }: { 
+        email: string,
+        requestVerificationCode: () => void,
+        nextStep: () => void 
+    } = $props()
 
     const handleSubmit = async () => {
         try {
-            const body: VerifySignUp = {email, code}
+            const body: VerifySignUpRequest = {email, code}
             const response = await fetch(`${import.meta.env.VITE_BASE_URL}/signup/verify`, {
                 method: "POST",
                 body:  JSON.stringify(body),
@@ -34,9 +42,12 @@
     maxlength="6"
     bind:value={code}
     onkeyup={onKeyUp}
-    placeholder="Enter your verification code"
+    placeholder="Code"
     class="w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
 />
+<div>
+    <small>Didn't get an email? <a class="cursor-pointer text-blue-600" onclick={requestVerificationCode}>Resend</a></small>
+</div>
 
 <div class="mt-auto">
     <button
