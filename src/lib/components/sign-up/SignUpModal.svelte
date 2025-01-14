@@ -22,8 +22,8 @@
         currentStep++
     }
 
-    const previousStep = () => {
-        currentStep--
+    const reset = () => {
+        currentStep = 1
     }
 </script>
 
@@ -51,7 +51,7 @@
 
         {#if currentStep == 2 || currentStep == 3}
         <button
-            onclick={previousStep}
+            onclick={reset}
             aria-label="Previous step"
             class="w-4 h-8"
         >
