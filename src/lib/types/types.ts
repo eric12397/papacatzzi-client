@@ -24,8 +24,17 @@ type CreateSighting = {
     timestamp:   number
 }
 
-type CreateUser = {
-    username: string
+type BeginSignUpRequest = {
     email: string
+}
+
+type VerifySignUpRequest = {
+    email: string
+    code: string
+}
+
+type FinishSignUpRequest = {
+    email: string
+    username: string
     password: string
 }

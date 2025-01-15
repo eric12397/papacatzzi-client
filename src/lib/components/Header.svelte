@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { goto } from "$app/navigation";
 	import AddPhoto from "./AddPhoto.svelte";
-	import SignUp from "./SignUp.svelte";
+	import SignUpModal from "./sign-up/SignUpModal.svelte";
 
 	let showModal = $state(false)
 
@@ -40,6 +40,6 @@
 	</div>
 </header>
 {#if showModal}
-	<SignUp close={closeModal}/>
+	<SignUpModal close={closeModal}/>
 {/if}
 
