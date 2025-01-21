@@ -1,11 +1,14 @@
 <script lang="ts">
 	import { goto } from "$app/navigation";
 	import AddPhoto from "./AddPhoto.svelte";
-	import SignUpModal from "./sign-up/SignUpModal.svelte";
+	import Modal from "./Modal.svelte";
+	import SignUpFlow from "./sign-up/SignUpFlow.svelte";
 
 	let showModal = $state(false)
+	let component = $state("")
 
-	const openModal = () => {
+	const openModal = (componentToRender: string) => {
+		component = componentToRender
 		showModal = true
 	};
 
@@ -30,16 +33,20 @@
 			<label for="fileInput" class="cursor-pointer">📷</label>
 			<AddPhoto onSuccess={() => goto("/upload")}/>
 			<div>
-				<a href="#" class="hover:text-blue-300">Log In</a>
+				<a onclick={() => openModal("login")} class="hover:text-blue-300">Log In</a>
 			</div>
 			<div>
-				<a onclick={openModal} class="hover:text-blue-300">Sign Up</a>
+				<a onclick={() => openModal("signup")} class="hover:text-blue-300">Sign Up</a>
 			</div>
 		</div>
 
 	</div>
 </header>
 {#if showModal}
-	<SignUpModal close={closeModal}/>
+	<Modal close={closeModal}>
+		{#if component === "signup"}
+		<SignUpFlow />
+		{/if}
+	</Modal>
 {/if}
 
