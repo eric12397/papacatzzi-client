@@ -38,3 +38,8 @@ type FinishSignUpRequest = {
     username: string
     password: string
 }
+
+type LoginRequest = {
+    email: string
+    password: string
+}

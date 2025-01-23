@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { goto } from "$app/navigation";
 	import AddPhoto from "./AddPhoto.svelte";
+	import Login from "./Login.svelte";
 	import Modal from "./Modal.svelte";
 	import SignUpFlow from "./sign-up/SignUpFlow.svelte";
 
@@ -45,7 +46,11 @@
 {#if showModal}
 	<Modal close={closeModal}>
 		{#if component === "signup"}
-		<SignUpFlow />
+		<SignUpFlow close={closeModal}/>
+
+		{:else if component === "login"}
+		<Login close={closeModal}/>
+
 		{/if}
 	</Modal>
 {/if}
