@@ -6,6 +6,8 @@
     let email = $state("")
     let currentStep = $state(1)
 
+    let { close }: { close: () => void } = $props()
+
     const requestVerificationCode = async () => {
         const body: BeginSignUpRequest = {email}
         const response = await fetch(`${import.meta.env.VITE_BASE_URL}/signup/begin`, {
