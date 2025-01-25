@@ -13,12 +13,12 @@
             });
             
             if (!response.ok) {
-                throw new Error(`Failed to signup new user: ${response.statusText}`);
+                throw new Error(`Failed to log in: ${response.statusText}`);
             }
 
             close()
         } catch (error) {
-            console.error('Error signing up new user:', error);
+            console.error('Error logging in:', error);
             throw error;
         }
     }
