@@ -1,5 +1,5 @@
 <script lang="ts">
-    import { afterNavigate } from '$app/navigation';
+    import { afterNavigate, goto } from '$app/navigation';
     let { data } = $props();
 
     let isOpen = $state(false);
@@ -107,7 +107,7 @@
 >
     <div class={`rounded-t-lg ${isMobile ? "overflow-hidden" : ""}`}>
         <img class="w-full max-h-64 object-cover"
-            src={data.sighting.photoURL}
+            src={"/images/cat.jpg"}
             alt="Preview" 
             style=""  
         />

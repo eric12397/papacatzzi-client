@@ -1,7 +1,6 @@
 <script lang="ts">
 	import { onMount, onDestroy } from 'svelte';
 	import { getCurrentPosition } from '$lib/utils/currPos';
-	import L from 'leaflet';
 	import 'leaflet/dist/leaflet.css';
 	import Marker from './Marker.svelte';
 
@@ -10,10 +9,12 @@
 	let initialView: L.LatLngExpression;
 
 	onMount(async () => {
+		const L = await import("leaflet")
 		try {
 			const currPos = await getCurrentPosition()
 			initialView = [currPos.coords.latitude, currPos.coords.longitude]
 		} catch (e) {
+			// TODO: set some default location
 			console.error(e)
 		}
 
