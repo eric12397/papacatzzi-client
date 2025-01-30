@@ -65,7 +65,7 @@
             class="w-full text-white py-2 px-4 rounded-full 
             {!email || !password ? 'bg-gray-200 text-gray-400' : 'bg-indigo-700'}"
         >
-            Sign Up
+            Log In
         </button>
     </div>
 </div>
