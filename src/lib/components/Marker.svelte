@@ -1,12 +1,12 @@
 <script lang="ts">
-    import { onMount } from "svelte";
-    import L from 'leaflet';
+    import { onMount, onDestroy } from "svelte";
 	import { goto } from "$app/navigation";
 
     let { map, coords }: { map: L.Map, coords: SightingCoordinates } = $props()
     let marker: L.Marker;
 
-    onMount(() => {
+    onMount(async () => {
+        const L = await import("leaflet")
         const icon = L.icon({
             iconUrl: '/images/cat-marker.png',
             iconSize: [60, 60], // Adjust size of the icon (width, height)
@@ -16,15 +16,15 @@
         marker.addTo(map)
         
         marker.on('click', async () => {
-            goto(`/maps/sightings/${coords.id}`)
+            goto(`/sightings/${coords.id}`)
         });
-
-        return () => {
-            if (marker) {
-                map.removeLayer(marker);
-            }
-        }
     })
+
+    onDestroy(() => {
+		if (marker) {
+            map.removeLayer(marker);
+        }
+	});
 </script>
 
     
