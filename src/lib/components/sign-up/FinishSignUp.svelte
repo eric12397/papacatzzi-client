@@ -19,7 +19,7 @@
             }
 
             close()
-            goto("/maps")
+            goto("/login")
         } catch (error) {
             console.error('Error signing up new user:', error);
             throw error;
