@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { enhance } from "$app/forms";
 	import { goto } from "$app/navigation";
 	import AddPhoto from "$lib/components/AddPhoto.svelte";
 	import { image } from "$lib/states/image.svelte";
@@ -12,33 +13,13 @@
     let btnDisabled = $derived(
         image.photoURL && formData.description && formData.animal ? false : true
     )
-
-    const handleSubmit = async () => {
-        const body: CreateSighting = {
-            ...image.toJSON(),
-            ...formData
-        }
-
-        try {
-            const response = await fetch(`${import.meta.env.VITE_BASE_URL}/sightings`, {
-                method: "POST",
-                body:  JSON.stringify(body),
-            });
-            
-            if (!response.ok) {
-                throw new Error(`Failed to post new sighting: ${response.statusText}`);
-            }
-
-            goto("/")
-
-        } catch (error) {
-            console.error('Error fetching sighting details:', error);
-            throw error;
-        }
-    }
 </script>
 
-<form class="flex justify-center" onsubmit={handleSubmit}>
+<form 
+    method="POST" 
+    class="flex justify-center"
+    use:enhance
+>
     <div class="flex flex-col w-screen md:w-1/3 lg:w-1/2 space-y-4 p-3">
         <div class="flex items-center mt-3">
             <i class="cursor-pointer fa-solid fa-arrow-left fa-xl" onclick={() => goto("/")}></i>
@@ -46,6 +27,7 @@
         </div>
         
         <textarea
+            name="description"
             class="rounded-lg border-gray-300"
             placeholder="Enter details about the photo"
             bind:value={formData.description}>
@@ -86,7 +68,11 @@
             </select>
         </label>
 
-        <input hidden bind:value={formData.reporter}>
+        <input name="reporter" hidden bind:value={formData.reporter}>
+        <input name="photoURL" hidden bind:value={image.photoURL}>
+        <input name="latitude" hidden bind:value={image.latitude}>
+        <input name="longitude" hidden bind:value={image.longitude}>
+        <input name="timestamp" hidden bind:value={image.timestamp}>
 
         <button 
             disabled={btnDisabled}

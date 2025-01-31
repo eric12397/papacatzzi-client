@@ -21,7 +21,7 @@ type CreateSighting = {
     description: string
     latitude:    number
     longitude:   number
-    timestamp:   number
+    timestamp:   Date
 }
 
 type BeginSignUpRequest = {
