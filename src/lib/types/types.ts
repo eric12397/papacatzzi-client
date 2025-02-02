@@ -43,3 +43,8 @@ type LoginRequest = {
     email: string
     password: string
 }
+
+type User = {
+    id: string
+    email: string
+}
