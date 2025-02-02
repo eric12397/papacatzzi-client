@@ -1,7 +1,7 @@
 import { redirect, type Handle, type RequestEvent } from "@sveltejs/kit"
 import jwt from "jsonwebtoken"
 
-const SECRET = "papacatzzi123"
+const SECRET = import.meta.env.JWT_SECRET
 
 export const handle: Handle = async ({ event, resolve }) => {
 
