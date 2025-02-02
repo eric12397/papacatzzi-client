@@ -27,8 +27,22 @@ export const actions: Actions = {
 			}
 		}
 
-		// TODO: set tokens in cookies
+		cookies.set('accessToken', data.access, {
+			httpOnly: true,
+			path: '/',
+			secure: true,
+			sameSite: 'strict',
+			//expires: new Date(exp * 1000),
+		});
 
-		redirect(303, "/")
+		cookies.set('refreshToken', data.refresh, {
+			httpOnly: true,
+			path: '/',
+			secure: true,
+			sameSite: 'strict',
+			//expires: new Date(exp * 1000),
+		});
+
+		throw redirect(303, "/")
 	},
 }
