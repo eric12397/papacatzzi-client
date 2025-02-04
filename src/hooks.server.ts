@@ -50,7 +50,7 @@ const authenticateUser = async (event: RequestEvent): Promise<User | null> =>  {
         event.cookies.set('accessToken', data.access, {
             httpOnly: true,     
             path: '/',
-            secure: true,
+            secure: process.env.NODE_ENV === 'production',
             sameSite: 'strict',
             expires: new Date(exp * 1000),
         });

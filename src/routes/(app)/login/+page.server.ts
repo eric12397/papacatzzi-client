@@ -32,7 +32,7 @@ export const actions: Actions = {
 		cookies.set('accessToken', data.access, {
 			httpOnly: true,
 			path: '/',
-			secure: true,
+			secure: process.env.NODE_ENV === 'production',
 			sameSite: 'strict',
 			expires: new Date(accessExp * 1000),
 		});
@@ -41,7 +41,7 @@ export const actions: Actions = {
 		cookies.set('refreshToken', data.refresh, {
 			httpOnly: true,
 			path: '/',
-			secure: true,
+			secure: process.env.NODE_ENV === 'production',
 			sameSite: 'strict',
 			expires: new Date(refreshExp * 1000),
 		});
