@@ -46,12 +46,13 @@ const authenticateUser = async (event: RequestEvent): Promise<User | null> =>  {
             return null
         }
         
+        const { exp } = jwt.decode(data.access) as JwtPayload
         event.cookies.set('accessToken', data.access, {
             httpOnly: true,     
             path: '/',
             secure: true,
             sameSite: 'strict',
-            //expires: new Date(exp * 1000),
+            expires: new Date(exp * 1000),
         });
 
         const user = jwt.decode(data.access) as User
