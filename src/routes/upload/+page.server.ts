@@ -31,7 +31,6 @@ export const actions: Actions = {
 			timestamp: created
 		}
 
-		//TODO: add access token from cookie
 		const response = await fetch(`${import.meta.env.VITE_BASE_URL}/sightings`, {
 			method: "POST",
 			headers: {
