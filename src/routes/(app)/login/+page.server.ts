@@ -1,5 +1,6 @@
 import { fail, redirect } from "@sveltejs/kit"
 import type { Actions } from "./$types"
+import jwt from "jsonwebtoken"
 
 export const actions: Actions = {
 	default: async ({ request, cookies }) => {
@@ -27,8 +28,24 @@ export const actions: Actions = {
 			}
 		}
 
-		// TODO: set tokens in cookies
+		const { exp: accessExp } = jwt.decode(data.access) as JwtPayload
+		cookies.set('accessToken', data.access, {
+			httpOnly: true,
+			path: '/',
+			secure: process.env.NODE_ENV === 'production',
+			sameSite: 'strict',
+			expires: new Date(accessExp * 1000),
+		});
 
-		redirect(303, "/")
+		const { exp: refreshExp } = jwt.decode(data.refresh) as JwtPayload
+		cookies.set('refreshToken', data.refresh, {
+			httpOnly: true,
+			path: '/',
+			secure: process.env.NODE_ENV === 'production',
+			sameSite: 'strict',
+			expires: new Date(refreshExp * 1000),
+		});
+
+		throw redirect(303, "/")
 	},
 }

@@ -43,3 +43,14 @@ type LoginRequest = {
     email: string
     password: string
 }
+
+type User = {
+    id: string
+    email: string
+}
+
+type JwtExpiration = {
+    exp: number
+}
+
+type JwtPayload = User & JwtExpiration

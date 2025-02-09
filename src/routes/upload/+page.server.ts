@@ -2,7 +2,7 @@ import { fail, redirect } from "@sveltejs/kit"
 import type { Actions } from "./$types"
 
 export const actions: Actions = {
-	default: async ({ request }) => {
+	default: async ({ request, cookies }) => {
 		const data = await request.formData()
 		const reporter = data.get('reporter') as string
 		const animal = data.get('animal') as string
@@ -31,15 +31,16 @@ export const actions: Actions = {
 			timestamp: created
 		}
 
-		//TODO: add access token from cookie
 		const response = await fetch(`${import.meta.env.VITE_BASE_URL}/sightings`, {
 			method: "POST",
+			headers: {
+				Authorization: `Bearer ${cookies.get("accessToken")}`,
+			},
 			body:  JSON.stringify(body),
 		});
 		
 		if (!response.ok) {
 			const data = await response.json();
-			console.log(data)
 			return {
 				status: response.status,
 				success: false,
@@ -47,6 +48,6 @@ export const actions: Actions = {
 			}
 		}
 
-		redirect(303, "/")
+		throw redirect(303, "/")
 	},
 }
