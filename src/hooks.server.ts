@@ -4,9 +4,9 @@ import jwt from "jsonwebtoken"
 const SECRET = import.meta.env.JWT_SECRET
 
 export const handle: Handle = async ({ event, resolve }) => {
-
+    event.locals.user = await authenticateUser(event)
+    
     if (event.url.pathname.startsWith("/upload")) {
-        event.locals.user = await authenticateUser(event)
         if (!event.locals.user) {
             throw redirect(303, "/login")
         }

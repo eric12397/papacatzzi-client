@@ -1,4 +1,6 @@
 <script lang="ts">
+	import GoogleSignIn from "../GoogleSignIn.svelte";
+
     let { 
         email = $bindable(),
         requestVerificationCode,
@@ -33,8 +35,16 @@
     bind:value={email}
 />
 
-<div>
-    <small>Already have an account? <a>Log In</a></small>
+<div class="flex items-center w-full my-4">
+    <hr class="flex-grow border-gray-300" />
+    <span class="px-3 text-gray-500 text-sm">OR</span>
+    <hr class="flex-grow border-gray-300" />
+</div>
+
+<GoogleSignIn />
+
+<div class="mt-2">
+    <small>Already have an account? <a href="/login" class="hover:text-blue-300">Log In</a></small>
 </div>
 
 <div class="mt-auto">
