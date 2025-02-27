@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { enhance } from "$app/forms";
+	import GoogleSignIn from "./GoogleSignIn.svelte";
 
     let email = $state("")
     let password = $state("")
@@ -40,10 +41,18 @@
             class="w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
             bind:value={password}
         />
+
+        <div class="flex items-center w-full my-4">
+            <hr class="flex-grow border-gray-300" />
+            <span class="px-3 text-gray-500 text-sm">OR</span>
+            <hr class="flex-grow border-gray-300" />
+        </div>
+
+        <GoogleSignIn />
     </div>
     
-    <div>
-        <small>Don't have an account? <a>Sign Up</a></small>
+    <div class="mt-2">
+        <small>Don't have an account? <a href="/signup" class="hover:text-blue-300">Sign Up</a></small>
     </div>
     
     <div class="mt-auto">
