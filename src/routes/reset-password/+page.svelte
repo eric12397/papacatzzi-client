@@ -7,12 +7,8 @@
     let btnDisabled = $derived(password === "" || confirmPassword === "")
 </script>
 
-<style>
-    
-</style>
-
-<!-- <div class="w-screen" style="mask-image: url('/images/cat-background.webp');mask-size: cover;mask-type: alpha;">
-</div> -->
+<div class="w-screen h-screen bg-red-50 bg-[url(/images/cat-background.webp)] bg-cover bg-center bg-repeat ">
+</div>
 <div
     class="flex flex-col w-full h-full fixed bg-white
     md:w-[500px] md:h-[600px] md:rounded-2xl md:shadow-xl top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"
