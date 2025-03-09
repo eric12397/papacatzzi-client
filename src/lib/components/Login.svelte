@@ -8,6 +8,12 @@
     let { close }: { close: () => void } = $props()
 </script>
 
+<style>
+    .link-color {
+        color: #115BCA;
+    }
+</style>
+
 <div class="flex px-4 pt-4 justify-end">
     <button
         onclick={close}
@@ -52,7 +58,11 @@
     </div>
     
     <div class="mt-2">
-        <small>Don't have an account? <a href="/signup" class="hover:text-blue-300">Sign Up</a></small>
+        <small>Don't have an account? <a href="/signup" class="link-color">Sign Up</a></small>
+    </div>
+
+    <div class="mt-2">
+        <small><a href="/forgot-password" class="link-color">Forgot password? </a></small>
     </div>
     
     <div class="mt-auto">
