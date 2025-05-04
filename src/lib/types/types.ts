@@ -44,6 +44,15 @@ type LoginRequest = {
     password: string
 }
 
+type ForgotPasswordRequest = {
+    email: string
+}
+
+type ResetPasswordRequest = {
+    token: string
+    newPassword: string
+}
+
 type User = {
     id: string
     email: string
