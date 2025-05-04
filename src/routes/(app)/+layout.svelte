@@ -1,9 +1,9 @@
 <script lang="ts">
 	import Header from '$lib/components/Header.svelte';
 	import Map from '$lib/components/Map.svelte';
-	let { children } = $props();
+	let { children, data } = $props();
 </script>
 
-<Header/>
+<Header user={data.user}/>
 <Map />
 {@render children()}
