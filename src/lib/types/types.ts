@@ -44,6 +44,10 @@ type LoginRequest = {
     password: string
 }
 
+type LogoutRequest = {
+    refresh: string
+}
+
 type ForgotPasswordRequest = {
     email: string
 }
